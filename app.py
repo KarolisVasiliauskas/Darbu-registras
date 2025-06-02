@@ -115,19 +115,9 @@ elif option == "✏️ Redaguoti užduotis":
         st.markdown(f"**{row['Data']} – {row['Vardas']} – {row['Užduotis']}**")
         new_trukme = st.number_input(f"Trukmė #{i}", value=float(row["Trukmė_h"]), key=f"trukme_{i}")
         new_busena = st.selectbox(f"Būsena #{i}", ["Vykdoma", "Atlikta"], index=0 if row["Būsena"] != "Atlikta" else 1, key=f"busena_{i}")
-        cols = st.columns([2, 2, 2])
-        if cols[0].button(f"💾 Išsaugoti pakeitimus #{i}", key=f"save_{i}"):
+        if st.button(f"💾 Išsaugoti pakeitimus #{i}", key=f"save_{i}"):
             redaguoti_uzduoti(i, new_trukme, new_busena)
             st.success("Užduotis atnaujinta")
-            st.experimental_rerun()
-        if cols[1].button(f"🔁 Perleisti užduotį #{i}", key=f"perleisti_{i}"):
-            naujas_vardas = st.selectbox(f"Pasirinkite kam perleisti #{i}", visi_vardai, key=f"naujas_vardas_{i}")
-            perleisti_uzduoti(i, naujas_vardas)
-            st.success("Užduotis perleista")
-            st.experimental_rerun()
-        if cols[2].button(f"🗑️ Ištrinti užduotį #{i}", key=f"istrinti_{i}"):
-            istrinti_uzduoti(i)
-            st.success("Užduotis ištrinta")
             st.experimental_rerun()
 
 elif option == "🔍 Priskirti darbų kokybę":
