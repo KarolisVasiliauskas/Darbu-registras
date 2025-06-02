@@ -91,18 +91,27 @@ option = st.radio("Pasirinkite veiksmą:", [
 if option == "📄 Suvesti atliktus darbus":
     st.subheader("✏️ Naujo darbo registracija")
     vardas = st.selectbox("Vardas", visi_vardai)
-    uzduotis = st.text_input("Užduotis")
+    uzduociu_sarasas = df[(df["Vardas"] == vardas) & (df["Būsena"] == "Vykdoma")]["Užduotis"].unique().tolist()
+    uzduotis = st.selectbox("Užduotis", uzduociu_sarasas)
     trukme = st.number_input("Trukmė (val.)", min_value=0.0, step=0.25)
-    if st.button("➕ Išsaugoti"):
+    cols = st.columns([1, 1])
+    if cols[0].button("➕ Išsaugoti"):
         if vardas and uzduotis:
             irasyti_darba(vardas, datetime.datetime.now(), uzduotis, trukme)
             st.success("Darbas įregistruotas")
+            st.experimental_rerun()
         else:
             st.warning("Užpildykite visus laukus")
+    if cols[1].button("✅ Projektas baigtas"):
+        df_idx = df[(df["Vardas"] == vardas) & (df["Užduotis"] == uzduotis) & (df["Būsena"] == "Vykdoma")].index
+        if not df_idx.empty:
+            redaguoti_uzduoti(df_idx[0], trukme, "Atlikta")
+            st.success("Užduotis pažymėta kaip atlikta")
+            st.experimental_rerun()
 
 elif option == "✏️ Redaguoti užduotis":
     st.subheader("🛠️ Redaguoti esamas užduotis")
-    for i, row in df.iterrows():
+    for i, row in df[df["Būsena"] == "Vykdoma"].iterrows():
         st.markdown(f"**{row['Data']} – {row['Vardas']} – {row['Užduotis']}**")
         new_trukme = st.number_input(f"Trukmė #{i}", value=float(row["Trukmė_h"]), key=f"trukme_{i}")
         new_busena = st.selectbox(f"Būsena #{i}", ["Vykdoma", "Atlikta"], index=0 if row["Būsena"] != "Atlikta" else 1, key=f"busena_{i}")
@@ -116,7 +125,7 @@ elif option == "🔍 Priskirti darbų kokybę":
     if slaptazodis == SLAPTAZODIS:
         st.subheader("🔬 Neįvertinti darbai")
         df = pd.read_csv(DATA_FILE)
-        neivertinti = df[df["Kokybė"] == ""]
+        neivertinti = df[(df["Kokybė"] == "") & (df["Būsena"] == "Vykdoma")]
         for i, row in neivertinti.iterrows():
             st.markdown(f"**{row['Data']} – {row['Vardas']}: {row['Užduotis']}**")
             ivert = st.slider(f"Kokybė darbui #{i}", min_value=0, max_value=100, key=f"kokybe_{i}")
