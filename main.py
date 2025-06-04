@@ -23,7 +23,7 @@ elif pagrindinis_langas == "📝 Suvesti atliktus darbus":
     suvesti_darbus.rodyti_suvesti_darbus()
 
 elif pagrindinis_langas == "🎯 Priskirti darbų kokybę":
-    priskirti_kokybe.rodyti_kokybes_vertinima()
+    priskirti_kokybe.rodyti_kokybes_suvestine()
 
 elif pagrindinis_langas == "📊 Komandos KPI":
     kpi_suvestine.rodyti_kpi()
