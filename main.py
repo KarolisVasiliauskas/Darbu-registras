@@ -20,7 +20,7 @@ if pagrindinis_langas == "📅 Dienos darbai ir registracija":
     registruoti_uzduoti.rodyti_uzduoties_registravima()
 
 elif pagrindinis_langas == "📝 Suvesti atliktus darbus":
-    suvesti_darbus.rodyti_suvesti()
+    suvesti_darbus.rodyti_suvesti_darbus()
 
 elif pagrindinis_langas == "🎯 Priskirti darbų kokybę":
     priskirti_kokybe.rodyti_kokybes_vertinima()
