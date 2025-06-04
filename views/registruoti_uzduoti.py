@@ -22,5 +22,5 @@ def rodyti_dienos_darbus():
     st.dataframe(filtroti)
 
 def gauti_darbuotoju_sarasa():
-    df = nuskaityti_duomenis()
+    df = ('Darius', 'Justas', 'Tomas', 'Gediminas', 'Vidas', 'Mindaugas', 'Kęstutis')
     return sorted(df['Vardas'].dropna().unique().tolist())
