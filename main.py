@@ -17,7 +17,7 @@ pagrindinis_langas = st.sidebar.selectbox(
 )
 
 if pagrindinis_langas == "📅 Dienos darbai ir registracija":
-    registruoti_uzduoti.rodyti_registracija()
+    registruoti_uzduoti.rodyti_uzduoties_registravima()
 
 elif pagrindinis_langas == "📝 Suvesti atliktus darbus":
     suvesti_darbus.rodyti_suvesti()
